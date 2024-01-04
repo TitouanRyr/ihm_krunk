@@ -29,7 +29,7 @@ def kill_camera():
 
 def launch_camera():
     global camera_process
-    command_to_run = ["/opt/ros/noetic/bin/roslaunch on_camera pylon_camera_node.launch"]
+    command_to_run = ["/opt/ros/noetic/bin/roslaunch pylon_camera pylon_camera_node.launch"]
 
     try:
         # Lancer la commande dans un processus séparé

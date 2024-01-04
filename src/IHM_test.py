@@ -1,8 +1,6 @@
 import sys
-from PyQt5.QtWidgets import *
+from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLabel
 from PyQt5.QtGui import QIcon
-from PyQt5.QtCore import QProcess
-
 from Codes.Lidar.launch_lidar import launch_lidar, kill_lidar
 from Codes.Camera.launch_camera import launch_camera, kill_camera
 
@@ -36,8 +34,8 @@ class InterfaceGraphique(QWidget):
         self.bouton_7.setIcon(QIcon.fromTheme("applications-system"))
 
         # Création des blocs pour l'image, le graphique et le texte
-        self.text_browser = QTextBrowser()
-        self.text_browser.setFixedHeight(50)
+        self.image_block = QLabel("Text Block", self)
+        self.image_block.setStyleSheet("background-color: lightgray; padding: 10px;")
 
         self.graph_block = QLabel("Image Block", self)
         self.graph_block.setStyleSheet("background-color: lightgray; padding: 10px;")
@@ -56,7 +54,7 @@ class InterfaceGraphique(QWidget):
         layout_buttons.addWidget(self.bouton_7)
 
         layout_blocks = QVBoxLayout()
-        layout_blocks.addWidget(self.text_browser)
+        layout_blocks.addWidget(self.image_block)
         layout_blocks.addWidget(self.graph_block)
         layout_blocks.addWidget(self.text_block)
 
