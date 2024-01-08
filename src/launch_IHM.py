@@ -6,11 +6,14 @@ from PyQt5.QtCore import QProcess
 from Codes.Lidar.launch_lidar import launch_lidar, kill_lidar
 from Codes.Camera.launch_camera import launch_camera, kill_camera
 from Codes.Lidar.acquisition_lidar import acquisition_r2000
+from Codes.Camera.acquisition_camera import acquisition_camera
+from Codes.Light.launch_light import launch_light, kill_light
+from Codes.Light.launch_light import arduino_init
 
 class InterfaceGraphique(QWidget):
     def __init__(self):
         super().__init__()
-
+        arduino_init()
         self.initUI()
 
     def initUI(self):
@@ -101,6 +104,9 @@ class InterfaceGraphique(QWidget):
 
     def action_bouton_camera(self):
         self.text_block.setText("Action Bouton 6")
+        # launch_light()
+        acquisition_camera()
+        # kill_light()
 
     def action_bouton_reglage(self):
         self.text_block.setText("Action Bouton 7")
