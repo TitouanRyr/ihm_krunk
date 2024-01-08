@@ -96,6 +96,7 @@ class InterfaceGraphique(QWidget):
 
     def action_bouton_lidar(self):
         self.text_block.setText("Action Bouton 5")
+        acquisition_r2000()
 
     def action_bouton_camera(self):
         self.text_block.setText("Action Bouton 6")
