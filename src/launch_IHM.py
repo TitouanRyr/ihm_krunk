@@ -5,6 +5,7 @@ from PyQt5.QtCore import QProcess
 
 from Codes.Lidar.launch_lidar import launch_lidar, kill_lidar
 from Codes.Camera.launch_camera import launch_camera, kill_camera
+from Codes.Lidar.acquisition_lidar import acquisition_r2000
 
 class InterfaceGraphique(QWidget):
     def __init__(self):
