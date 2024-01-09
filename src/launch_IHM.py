@@ -1,4 +1,7 @@
+import subprocess
 import sys
+import time
+import threading
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import QProcess
@@ -13,7 +16,7 @@ from Codes.Light.launch_light import arduino_init
 class InterfaceGraphique(QWidget):
     def __init__(self):
         super().__init__()
-        arduino_init()
+        arduino_init(self)
         self.initUI()
 
     def initUI(self):
@@ -93,10 +96,21 @@ class InterfaceGraphique(QWidget):
         kill_camera()
 
     def action_bouton_play(self):
-        self.text_block.setText("Action Bouton 3")
+        self.start_value = True
+        t = threading.Thread(target=self.boucle_acquisition)
+        t.start()
+
+
+    def boucle_acquisition(self):
+        while self.start_value:
+            subprocess.Popen(
+                "/opt/ros/noetic/bin/rosbag record --duration 1 -o /home/icam/kuhn_ws/src/ihm_krunk/src/acquisitions/acquisition_globale/ /scan /pylon_camera/image_raw",
+                shell=True)
 
     def action_bouton_stop(self):
-        self.text_block.setText("Action Bouton 4")
+        self.start_value = False
+
+
 
     def action_bouton_lidar(self):
         self.text_block.setText("Action Bouton 5")
