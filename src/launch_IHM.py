@@ -2,15 +2,17 @@ import subprocess
 import sys
 import time
 import threading
+import rospy
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QIcon
-from PyQt5.QtCore import QProcess
+from PyQt5.QtCore import QCoreApplication
 
 from Codes.Lidar.launch_lidar import launch_lidar, kill_lidar
 from Codes.Camera.launch_camera import launch_camera, kill_camera
 from Codes.Lidar.acquisition_lidar import acquisition_r2000
 from Codes.Camera.acquisition_camera import acquisition_camera
-from Codes.Light.launch_light import launch_light, kill_light
+from Codes.Lidar.launch_lidar import launch_lidar, kill_lidar
+from Codes.Camera.launch_camera import launch_camera, kill_camera
 from Codes.Light.launch_light import arduino_init
 
 class InterfaceGraphique(QWidget):
@@ -18,6 +20,7 @@ class InterfaceGraphique(QWidget):
         super().__init__()
         arduino_init(self)
         self.initUI()
+        self.t = None
 
     def initUI(self):
         # Création des boutons
@@ -83,47 +86,91 @@ class InterfaceGraphique(QWidget):
         self.bouton_7.clicked.connect(self.action_bouton_reglage)
 
         self.setGeometry(100, 100, 800, 400)
-        self.setWindowTitle('Interface Graphique')
+        self.setWindowTitle('IHM_Krunk')
         self.show()
 
     # Fonctions d'action pour les boutons (à personnaliser selon vos besoins)
+
+    def node_exists(self, node_name):
+        time.sleep(1)
+        try:
+            # Obtenez la liste des sujets publiés
+            topics = rospy.get_published_topics()
+
+            # Parcourez la liste des sujets pour vérifier si le nœud existe
+            for topic, _ in topics:
+                if topic.startswith("/" + node_name):
+                    return True
+
+            # Si le nœud n'est pas trouvé
+            return False
+
+        except rospy.ROSException:
+            return False
+    def update_text_browser(self, message):
+        self.text_browser.append(message)
+        self.text_browser.verticalScrollBar().setValue(self.text_browser.verticalScrollBar().maximum())
+
     def action_bouton_on(self):
+        self.update_text_browser("Lancement Lidar et Caméra : ")
+        QCoreApplication.processEvents()
         launch_lidar()
         launch_camera()
+        if self.node_exists("r2000_node") and self.node_exists("pylon_camera_node"):
+            self.update_text_browser("Lancement ok")
+        elif self.node_exists("r2000_node"):
+            self.update_text_browser("Lidar ok")
+        elif self.node_exists("pylon_camera_node"):
+            self.update_text_browser("Camera ok")
+        else:
+            self.update_text_browser("Echec")
 
     def action_bouton_off(self):
+        self.update_text_browser("Arret Lidar et Caméra : ")
+        QCoreApplication.processEvents()
         kill_lidar()
         kill_camera()
+        if self.node_exists("r2000_node") and self.node_exists("pylon_camera_node"):
+            self.update_text_browser("Echec")
+        elif self.node_exists("r2000_node"):
+            self.update_text_browser("Echec lidar")
+        elif self.node_exists("pylon_camera_node"):
+            self.update_text_browser("Echec camera")
+        else:
+            self.update_text_browser("Arret")
 
     def action_bouton_play(self):
         self.start_value = True
         t = threading.Thread(target=self.boucle_acquisition)
         t.start()
 
-
     def boucle_acquisition(self):
+        self.update_text_browser("lancement Acquisition :")
+        numero = 1
         while self.start_value:
-            subprocess.Popen(
-                "/opt/ros/noetic/bin/rosbag record --duration 1 -o /home/icam/kuhn_ws/src/ihm_krunk/src/acquisitions/acquisition_globale/ /scan /pylon_camera/image_raw",
-                shell=True)
+            self.update_text_browser(f"Acquisition {numero}")
+            subprocess.Popen("/opt/ros/noetic/bin/rosbag record --duration 1 -o /home/oem/kuhn_ws/src/ihm_krunk/src/acquisitions/acquisition_globale/ /scan /pylon_camera/image_raw", shell=True)
+            time.sleep(1)
+            numero += 1
 
     def action_bouton_stop(self):
+        self.update_text_browser("Arret acquisition")
         self.start_value = False
-
-
+        if self.t is not None:
+            self.t.join()
 
     def action_bouton_lidar(self):
-        self.text_block.setText("Action Bouton 5")
+        self.update_text_browser("Lancement acquisition lidar")
         acquisition_r2000()
 
     def action_bouton_camera(self):
-        self.text_block.setText("Action Bouton 6")
+        self.update_text_browser("Lancement acquisition camera")
         # launch_light()
         acquisition_camera()
         # kill_light()
 
     def action_bouton_reglage(self):
-        self.text_block.setText("Action Bouton 7")
+        self.update_text_browser("Action Bouton 7")
 
 
 if __name__ == '__main__':
