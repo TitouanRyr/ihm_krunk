@@ -1,4 +1,4 @@
-# Project Name
+# IHM Krunk
 <p align="center">
   <img src=".idea/image/icon.png" alt="Logo du Projet" width="200" height="200">
 </p>
