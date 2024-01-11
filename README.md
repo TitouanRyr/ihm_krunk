@@ -25,4 +25,4 @@ The project is designed to evolve with the integration of advanced features, suc
 
 1. Clone the repository.
    ```bash
-   git clone https://github.com/your_username/your_project.git
+   git clone https://github.com/TitouanRyr/ihm_krunk
