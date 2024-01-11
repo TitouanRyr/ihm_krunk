@@ -1,4 +1,7 @@
 # Project Name
+<p align="center">
+  <img src=".idea/image/icon.png" alt="Logo du Projet" width="200" height="200">
+</p>
 
 ## About This Project
 
@@ -23,6 +26,47 @@ The project is designed to evolve with the integration of advanced features, suc
 
 ### Installation
 
-1. Clone the repository.
-   ```bash
-   git clone https://github.com/TitouanRyr/ihm_krunk
+Clone the repository in the `src` folder of your ROS workspace
+```bash
+git clone https://github.com/TitouanRyr/ihm_krunk
+```
+
+**Build the workspace:**  
+```
+cd <path/to/workspace>
+source /opt/ros/$ROS_DISTRO/setup.bash
+```
+use `catkin_make`:
+```
+catkin_make
+source <path/to/workspace>/install/setup.bash
+```
+## Usage
+This Human-Machine Interface (HMI) project simplifies the control of a ROS (Robot Operating System) environment consisting of three main packages: pf_lidar_ros_driver (Lidar) and two camera-related packages (pylon-ros-camera and dragandbot_common).
+
+### Launching the HMI
+To start the HMI, execute the following command in the terminal:
+
+```bash
+roslaunch ihm_krunk start_ihm.launch
+```
+### Control of Instrumentation Nodes
+- The **ON** button launches the instrumentations nodes.
+- The **OFF** button stops the instrumentation nodes.
+
+### Control of Automatic Acquisitions
+- The **Play** button initiates the automatic acquisition of Lidar and camera, saving a 1-second rosbag file in the **'ihm_krunk/src/acquisitions/acquisition_globale'** directory.
+- The **Stop** button halts the automatic acquisition.
+
+### Control of Manual Acquisitions
+- The **Lidar** button performs a single Lidar acquisition, saving a 1-second rosbag file in the **'ihm_krunk/src/acquisitions/acquisition_r2000'** directory.
+- The **Camera** button performs a single camera acquisition, saving a 1-second rosbag file in the **'ihm_krunk/src/acquisitions/acquisition_camera'** directory.
+
+### Settings (Future Update)
+The **Settings** button is reserved for future updates, allowing direct modification of instrumentation parameters from the HMI.
+
+### Feedback
+Feedback is displayed directly in the top panel of the HMI. The other two panels are currently under development and will be dedicated to Lidar mapping and camera video feedback.
+
+Feel free to explore the features and contribute to the evolution of this HMI project.
+   
