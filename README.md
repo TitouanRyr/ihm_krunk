@@ -29,7 +29,7 @@ The project is designed to evolve with the integration of advanced features, suc
 Clone the repository in the `src` folder of your ROS workspace
 ```bash
 git clone https://github.com/TitouanRyr/ihm_krunk
-
+```
 **Install the application:**
 
 Navigate to the package directory ('ihm_krunk') and run the installation script:
