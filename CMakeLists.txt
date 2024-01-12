@@ -12,7 +12,7 @@ catkin_package(
   CATKIN_DEPENDS rospy std_msgs
 )
 
-## Ajouter les exécutables
+## Ajouter les exécutables Python
 catkin_install_python(PROGRAMS
   src/launch_IHM.py
   src/Codes/Camera/acquisition_camera.py
@@ -25,3 +25,7 @@ catkin_install_python(PROGRAMS
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
+## Installer les fichiers de lancement
+install(DIRECTORY launch/
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/launch
+)

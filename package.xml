@@ -17,6 +17,7 @@
   <build_export_depend>rospy</build_export_depend>
   <exec_depend>rospy</exec_depend>
   <exec_depend>std_msgs</exec_depend>
+  <exec_depend>roslaunch</exec_depend> <!-- Added roslaunch as an execution dependency -->
 
   <!-- Optional: URL information -->
   <!-- Uncomment and replace with your URL -->
@@ -31,4 +32,3 @@
     <!-- Other tools can request additional information be placed here -->
   </export>
 </package>
-

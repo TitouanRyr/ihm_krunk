@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import subprocess
 import sys
 import time
@@ -7,8 +9,9 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import QCoreApplication
 
-from Codes.Lidar.launch_lidar import launch_lidar, kill_lidar
-from Codes.Camera.launch_camera import launch_camera, kill_camera
+# Ajoutez le chemin absolu du répertoire Codes à votre PYTHONPATH
+sys.path.append('/home/oem/kuhn_ws/src/ihm_krunk/src')
+
 from Codes.Lidar.acquisition_lidar import acquisition_r2000
 from Codes.Camera.acquisition_camera import acquisition_camera
 from Codes.Lidar.launch_lidar import launch_lidar, kill_lidar
@@ -149,7 +152,7 @@ class InterfaceGraphique(QWidget):
         numero = 1
         while self.start_value:
             self.update_text_browser(f"Acquisition {numero}")
-            subprocess.Popen("/opt/ros/noetic/bin/rosbag record --duration 1 -o /home/oem/kuhn_ws/src/ihm_krunk/src/acquisitions/acquisition_globale/ /scan /pylon_camera/image_raw", shell=True)
+            subprocess.Popen("/opt/ros/noetic/bin/rosbag record --duration 1 -o /home/oem/kuhn_ws/src/ihm_krunk/src/acquisitions/acquisition_globale/ /scan /pylon_camera_node/image_raw", shell=True)
             time.sleep(1)
             numero += 1
 
@@ -170,7 +173,7 @@ class InterfaceGraphique(QWidget):
         # kill_light()
 
     def action_bouton_reglage(self):
-        self.update_text_browser("Action Bouton 7")
+        self.update_text_browser("Pas encore en fonctionnement")
 
 
 if __name__ == '__main__':
