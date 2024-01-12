@@ -29,27 +29,22 @@ The project is designed to evolve with the integration of advanced features, suc
 Clone the repository in the `src` folder of your ROS workspace
 ```bash
 git clone https://github.com/TitouanRyr/ihm_krunk
-```
 
-**Build the workspace:**  
+**Install the application:**
+
+Navigate to the package directory ('ihm_krunk') and run the installation script:
 ```
-cd <path/to/workspace>
-source /opt/ros/$ROS_DISTRO/setup.bash
+cd <path/to/workspace>/src/ihm_krunk
+./install_script.sh
 ```
-use `catkin_make`:
-```
-catkin_make
-source <path/to/workspace>/install/setup.bash
-```
+This will create an executable in the applications folder.
+
 ## Usage
 This Human-Machine Interface (HMI) project simplifies the control of a ROS (Robot Operating System) environment consisting of three main packages: pf_lidar_ros_driver (Lidar) and two camera-related packages (pylon-ros-camera and dragandbot_common).
 
 ### Launching the HMI
-To start the HMI, execute the following command in the terminal:
+To start the HMI, double-click on the generated application in the applications folder.
 
-```bash
-roslaunch ihm_krunk start_ihm.launch
-```
 ### Control of Instrumentation Nodes
 - The **ON** button launches the instrumentations nodes.
 - The **OFF** button stops the instrumentation nodes.
