@@ -1,6 +1,6 @@
 # IHM Krunk
 <p align="center">
-  <img src=".idea/image/icon.png" alt="Logo du Projet" width="200" height="200">
+  <img src="exe/icon.png" alt="Logo du Projet" width="200" height="200">
 </p>
 
 ## About This Project
